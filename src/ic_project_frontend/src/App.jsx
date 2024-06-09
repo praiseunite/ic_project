@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ic_project_backend } from 'declarations/ic_project_backend';
 import Header from './Header';
 import Footer from './Footer';
 import Note from './Note';
+import Card from './Card';
 
 function App() {
   const [greeting, setGreeting] = useState('');
@@ -17,13 +18,23 @@ function App() {
   }
   
   const [notes, setNotes] = useState([]);
+ 
+ 
   function createNote(newNote){
       setNotes(prevNotes => {
         ic_project_backend.createNote(newNote.title, newNote.content)
         return [newNote, ...prevNotes];
       });
   }
-
+  useEffect(() => {
+    console.log("useEffect is triggered")
+    fetchData();
+  }, []);
+  
+async function fetchData(){
+  const notesArray = await ic_project_backend.readNotes();
+  setNotes(notesArray);
+}
 
 function deleteNote(id){
   ic_project_backend.readNotes(id);
@@ -37,22 +48,18 @@ function deleteNote(id){
   return (
     <main>
       <Header />
-      {/* <Note 
-        key={index}
-        id={index}
-        title={noteItem.title}
-        content={noteItem.content}
-        onDelete={deleteNote}
-      /> */}
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting">{greeting}</section>
+      <Card onAdd={createNote}/>
+      {notes.map((noteItem, index) => {
+        return(
+          <Note 
+            key={index}
+            id={index}
+            title={noteItem.title}
+            content={noteItem.content}
+            onDelete={deleteNote}
+          />
+        );
+      })}
       <Footer />
     </main>
   );

@@ -1,66 +1,71 @@
-import * as React from "react";
+import React, { useState } from "react";
+// import Add from "@mui/icons-material/Add";
+import AddIcon from '@mui/icons-material/Add';
+import Zoom from "@mui/material//Zoom";
+import Fab from "@mui/material//Fab";
+// import Add from "@mui/icons-material/Add";
 
-function Card(props){
-    
-    const [isExpanded, setExpanded] = useState(false);
 
-    const [note, setNote] = useState({
+function Card(props) {
+  const [isExpanded, setExpanded] = useState(false);
+
+  const [note, setNote] = useState({
+    title: "",
+    content: ""
+  });
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setNote(prevNote => {
+      return {
+        ...prevNote,
+        [name]: value
+      };
+    });
+  }
+
+  function submitNote(event) {
+    props.onAdd(note);
+    setNote({
       title: "",
       content: ""
     });
+    event.preventDefault();
+  }
 
+  function expand() {
+    setExpanded(true);
+  }
 
-    function handleChange(event){
-        const { name, value } = event.target;
+  return (
+    <div>
+      <form className="create-note">
+        {isExpanded && (
+          <input
+            name="title"
+            onChange={handleChange}
+            value={note.title}
+            placeholder="Title"
+          />
+        )}
 
-        SVGTextContentElement(prevNote => {
-            return {
-                ...prevNote,
-                [name]: value
-            };
-        });
-    }
-
-    function submitNote(event){
-        props.onAdd(note);
-        SVGTextContentElement({
-            title: "",
-            content: ""
-        });
-        event.preventDefault();
-    }
-
-    function expand(){
-        setExpanded(true);
-    }
-    return(
-        <div>
-            <form className="create-note">
-                {isExpanded && (
-                    <input 
-                        name="title"
-                        onChange={handleChange}
-                        value={Note.title}
-                        placeholder="Title..."
-                    />
-                )}
-
-                <tetxtarea
-                    name="content"
-                    onClick={expand}
-                    onChange={handleChange}
-                    value={Note.content}
-                    placeholder="Write a note..."
-                    rows={isExpanded ? 3 : 1}
-                />
-                <Zoom in = {isExpanded}>
-                    <Fab onClick={submitNote}>
-                        <AddIcon />
-                    </Fab>
-                </Zoom>
-            </form>
-        </div>
-    );
+        <textarea
+          name="content"
+          onClick={expand}
+          onChange={handleChange}
+          value={note.content}
+          placeholder="Take a note..."
+          rows={isExpanded ? 3 : 1}
+        />
+        <Zoom in={isExpanded}>
+          <Fab onClick={submitNote}>
+            <AddIcon />
+          </Fab>
+        </Zoom>
+      </form>
+    </div>
+  );
 }
 
 export default Card;
