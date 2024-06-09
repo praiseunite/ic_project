@@ -1,4 +1,4 @@
-// 
+/* General Reset and Basic Styling */
 * {
   padding: 0;
   margin: 0;
@@ -38,6 +38,7 @@ footer {
 footer p {
   color: #ccc;
 }
+
 .note {
   background: #fff;
   border-radius: 7px;
@@ -47,10 +48,12 @@ footer p {
   margin: 16px;
   float: left;
 }
+
 .note h1 {
   font-size: 1.1em;
   margin-bottom: 6px;
 }
+
 .note p {
   font-size: 1.1em;
   margin-bottom: 10px;
@@ -79,6 +82,7 @@ form.create-note {
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
+
 form.create-note input,
 form.create-note textarea {
   width: 100%;
@@ -89,6 +93,7 @@ form.create-note textarea {
   font-family: inherit;
   resize: none;
 }
+
 form.create-note button {
   position: absolute;
   right: 18px;
@@ -102,4 +107,33 @@ form.create-note button {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   outline: none;
+}
+
+/* Media Query for Phones */
+@media (max-width: 768px) {
+  body {
+    padding: 0 8px;
+  }
+
+  header {
+    margin: auto -8px;
+    padding: 16px 16px;
+  }
+
+  .note {
+    width: 100%;
+    margin: 8px 0;
+    float: none;
+  }
+
+  form.create-note {
+    width: 100%;
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  form.create-note button {
+    right: 10px;
+    bottom: -10px;
+  }
 }

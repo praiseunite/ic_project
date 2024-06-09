@@ -37,7 +37,7 @@ async function fetchData(){
 }
 
 function deleteNote(id){
-  ic_project_backend.readNotes(id);
+  ic_project_backend.delete(id);
   setNotes(prevNotes => {
     return prevNotes.filter((noteItem, index) => {
       return index != id;
