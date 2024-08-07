@@ -20,19 +20,31 @@ function App() {
   const [notes, setNotes] = useState([]);
  
  
-  function createNote(newNote){
-      setNotes(prevNotes => {
-        ic_project_backend.createNote(newNote.title, newNote.content)
-        return [newNote, ...prevNotes];
-      });
+  // function createNote(newNote){
+  //     setNotes(prevNotes => {
+  //       ic_project_backend.createNote(newNote.title, newNote.content)
+  //       return [newNote, ...prevNotes];
+  //     });
+  // }
+
+  function createNote(newNote) {
+    ic_project_backend.createNote(newNote.title, newNote.content, principal).then(() => {
+      fetchData();
+    });
   }
+  
   useEffect(() => {
     console.log("useEffect is triggered")
     fetchData();
   }, []);
   
-async function fetchData(){
-  const notesArray = await ic_project_backend.readNotes();
+// async function fetchData(){
+//   const notesArray = await ic_project_backend.readNotes();
+//   setNotes(notesArray);
+// }
+
+async function fetchData() {
+  const notesArray = await ic_project_backend.readNotes(principal);
   setNotes(notesArray);
 }
 

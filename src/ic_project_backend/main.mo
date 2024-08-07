@@ -32,6 +32,11 @@ actor DKeeper {
         let listBack = List.drop(notes, id + 1);
         notes := List.append(listFront, listBack);
     
-    }
+    };
+
+  public func storePrincipal(principal: Text) {
+    // Store the principal in a variable or database
+    Debug.print("Received principal: " # principal);
+  };
 
 }
